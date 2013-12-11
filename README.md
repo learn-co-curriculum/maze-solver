@@ -67,58 +67,86 @@ This represents an 11x11 Maze. The start of the maze is represented by `→` and
     #         #
     ###########
 
+Mazes should be assumed to be bordered by blocking `#` tiles, creating an arena for the maze, however, that shouldn't actually change the BFS algorithm.
+
 Your goal is to deliver a class, `MazeSolver`, that when initialized with a string of the maze, can solve it.
 
-Instances of `MazeSolver` should respond to a `#solve` method that populates a `@solution_path` instance variable to store an ordered array that describes the path, the moves to take to solve the maze, from start, to finish. Something like:
+Instances of `MazeSolver` should respond to a `#solve` method. This method is where the heart of BFS will most likely take place or be delegated to. As in, the solve method should trigger discovering neighbor nodes from the starting 
+point, possible moves to make, populating those possible moves into the node_queue, making those moves, discovering more neighbor nodes, adding those into node_queue, keeping track of visited_nodes and the traveled_path.
+
+By the end of the solve routine, an instance variable `@solution_path` should be populated with an ordered array that describes the path, the moves to take to solve the maze, from start, to finish. Something like:
 
     [
-        [0, 3],
-        [1, 3],
-        [2, 3],
-        [3, 3],
-        [3, 4],
-        [3, 5],
-        [4, 5],
-        [5, 5],
-        [5, 4],
-        [5, 3],
-        [6, 3],
-        [7, 3],
-        [8, 3],
-        [9, 3],
-        [9, 4],
-        [9, 5],
-        [8, 5],
-        [7, 5],
-        [7, 6],
-        [7, 7],
-        [8, 7],
-        [9, 7],
-        [10,7]
+      [0, 3],
+      [1, 3],
+      [2, 3],
+      [3, 3],
+      [3, 4],
+      [3, 5],
+      [4, 5],
+      [5, 5],
+      [5, 4],
+      [5, 3],
+      [6, 3],
+      [7, 3],
+      [8, 3],
+      [9, 3],
+      [9, 4],
+      [9, 5],
+      [8, 5],
+      [7, 5],
+      [7, 6],
+      [7, 7],
+      [8, 7],
+      [9, 7],
+      [10,7]
     ]
 
 This instance variable should be exposed via a `#solution_path` method.
 
-Additionally, you can choose to implement a method `#display_solution` that prints out the solved mazes with `.`s representing the solution path, as above.
+Additionally, implement a method `#display_solution` that prints out the solved mazes with `.`s representing the solution path, as above.
 
 In order to solve this maze, you must (or should) convert this maze to an array:
     
     [
-        ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
-        ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-        ["#", " ", "#", "#", "#", "#", "#", " ", "#", "#", "#"],
-        ["→", " ", " ", " ", "#", " ", " ", " ", " ", " ", "#"],
-        ["#", "#", "#", " ", "#", " ", "#", "#", "#", " ", "#"],
-        ["#", " ", " ", " ", " ", " ", "#", " ", " ", " ", "#"],
-        ["#", " ", "#", "#", "#", "#", "#", " ", "#", "#", "#"],
-        ["#", " ", "#", " ", " ", " ", "#", " ", " ", " ", "@"],
-        ["#", " ", "#", "#", "#", " ", "#", "#", "#", "#", "#"],
-        ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-        ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"]
+      ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
+      ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
+      ["#", " ", "#", "#", "#", "#", "#", " ", "#", "#", "#"],
+      ["→", " ", " ", " ", "#", " ", " ", " ", " ", " ", "#"],
+      ["#", "#", "#", " ", "#", " ", "#", "#", "#", " ", "#"],
+      ["#", " ", " ", " ", " ", " ", "#", " ", " ", " ", "#"],
+      ["#", " ", "#", "#", "#", "#", "#", " ", "#", "#", "#"],
+      ["#", " ", "#", " ", " ", " ", "#", " ", " ", " ", "@"],
+      ["#", " ", "#", "#", "#", " ", "#", "#", "#", "#", "#"],
+      ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
+      ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"]
     ]
 
-You can now refer to the start of the array as `0,3` in this matrix.
+You can now refer to the start of the array as `0,3` in this matrix. Having the maze as an array will allow you to move through it easier, referring to x and y coordinates, starting from the top left corner as 0,0.
 
-Mazes should be assumed to be bordered by blocking `#` tiles, creating an arena for the maze, however, that shouldn't actually change the BFS algorithm.
+Expose this array with a `#maze_array` method.
 
+It is worth noting of a strategy for keeping track of productive travel paths in the `traveled_path` array.
+
+A traveled_path will be needed to reconstruct the solution. Every time the BFS traverses a node, it should keep track of the node traveled and the node that led the BFS to travel there. Sort of like breadcrumbs.
+
+You will want to figure out how to replay the traveled_path in order to see the solution_path taken. For instance, imagine starting at the end of the traveled_path, the last of which will be the coordinates of the node that ended the maze. Along with that node, will be a reference to the coordinates of the previous node that led the BFS to the solution node. Find another member of the traveled_path array where the node was that previous node, continue following that tree and you will see the solution.
  
+For example, at the end of the solve routine, you might expect to see a traveled_path array that looks like:
+
+    [
+      [[0, 3], [0, 3]], # start of maze, started at 0,3.
+      [[1, 3], [0, 3]], # step 1 of solution, moving to 1,3, from 0,3
+      [[2, 3], [1, 3]], # step 2 of solution, moving to 2,3, from 1,3 (step 1)
+      [[1, 2], [1, 3]], # not in solution, moving to 1,2, from 1,3 (step 1)
+      [[3, 3], [2, 3]], # step 3 of solution, moving to 3,3, from 2,3 (step 2)
+      etc...
+      [[9, 7], [8, 7]], # step before solving maze
+      [[10, 7], [9, 7]] # mazed solved.
+    ]
+
+Given this traveled_path, you can see how you'd be able to work backwards until you found what path led to the last node.
+
+# Instructions
+
+Fork and clone, push up your solution to `master`.
