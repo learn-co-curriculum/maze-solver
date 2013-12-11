@@ -147,6 +147,18 @@ For example, at the end of the solve routine, you might expect to see a traveled
 
 Given this traveled_path, you can see how you'd be able to work backwards until you found what path led to the last node.
 
+## Level 1 Lab
+
+Within the test suite, a bunch of helper methods were added. Theoretically, these might not be needed to solve the maze, but being able to implement these instances methods will ensure you are properly manipulating and introspecting on the maze, the nodes, and their neighbors, adding data to the various stacks and queues, and able to move through nodes.
+
+### The Parsing Maze Context
+
+### The Neighbors and Nodes Context
+
+### The Queues and Stacks Context
+
+### The #move Context
+
 # Instructions
 
 Fork and clone, push up your solution to `master`.

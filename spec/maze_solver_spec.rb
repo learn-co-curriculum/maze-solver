@@ -53,6 +53,87 @@ describe 'MazeSolver' do
       expect(maze_array).to eq(maze_array_fixture)
     end
       
+    it 'represents the dimensions of the maze' do
+      expect(maze_array.size).to eq(11)
+      maze_array.each do |row|
+        expect(row.size).to eq(11)
+      end
+
+      expect(maze_solver.x_dimensions).to eq(11)
+      expect(maze_solver.y_dimensions).to eq(11)
+    end
+
+    it 'finds the maze start coordinates' do
+      expect(maze_solver.start_coordinates).to eq([0,3])
+    end
+
+    it 'finds the maze end coordinates' do
+      expect(maze_solver.end_coordinates).to eq([10,7])
+    end
+      
+  end
+
+  context 'Neighbors and nodes' do
+    it 'finds the tile value for a node' do
+      expect(maze_solver.node_value([0,0])).to eq("#")
+      expect(maze_solver.node_value([1,3])).to eq(" ")
+      expect(maze_solver.node_value([12,12])).to be_nil
+    end
+
+    it 'knows whether a node is a valid tile path' do
+      expect(maze_solver.valid_node?([12,12])).to be_false
+      expect(maze_solver.valid_node?([0,0])).to be_false
+
+      expect(maze_solver.valid_node?([1,3])).to be_true
+    end
+
+    it 'finds non-blocked neighboring nodes for a given coordinate' do
+      expect(maze_solver.neighbors([0,3])).to eq([[1,3]])
+    end 
+  end
+
+  context 'Queues and Stacks' do
+    describe '#add_to_queues' do
+      it 'adds a node to the queues and stacks of the maze solution' do
+        maze_solver.add_to_queues([0,3], [0,3])
+        
+        expect(maze_solver.node_queue).to include([0,3])
+        expect(maze_solver.traveled_path[0]).to include([0,3])
+        expect(maze_solver.visited_nodes).to include([0,3])
+
+        maze_solver.add_to_queues([1,3], [0,3])
+        
+        expect(maze_solver.node_queue).to include([1,3])
+        expect(maze_solver.traveled_path[1]).to include([1,3])
+        expect(maze_solver.visited_nodes).to include([1,3])
+      end
+    end
+  end
+
+  describe '#move' do
+    it 'shifts the most recent node out of the node_queue' do
+      maze_solver.add_to_queues([0,3])
+      maze_solver.move
+
+      expect(maze_solver.node_queue).not_to include([0,3])
+    end
+
+    it 'adds the neighbors of a node to the node queue' do
+      maze_solver.add_to_queues([0,3])
+      maze_solver.move
+
+      expect(maze_solver.node_queue).to include([1,3])        
+    end
+
+    it "doesn't traverse visited_nodes" do
+      maze_solver.node_queue = [[0,3]]
+      maze_solver.move
+
+      maze_solver.node_queue = [[0,3]]
+      maze_solver.move
+
+      expect(maze_solver.visited_nodes.size).to eq(1)
+    end
   end
 
   context 'Solving a maze' do
