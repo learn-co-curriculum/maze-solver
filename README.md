@@ -153,12 +153,34 @@ Within the test suite, a bunch of helper methods were added. Theoretically, thes
 
 ### The Parsing Maze Context
 
+Treating the maze as an array is a great way to architect the data for an easy solution. The methods described in this context will guarantee you've got the example maze well parsed. You'll know the x_dimensions, and the y_dimensions. Plus you'll build a pair of methods for finding the starting position and the ending position. Those methods will require you iterate over all the rows, keeping track of the row_index (the Y coordinate), and then iterate over every node in the row, keeping track of the node_index (the X coordinate), until you find a node with the value of the starting delimiter and the ending delimiter.
+
 ### The Neighbors and Nodes Context
+
+Now that you were able to find the start_coordinates and the end_coordinates, you should be able to execute two useful routines, given coordinates, you should build a method, `node_value`, that returns the character value of a tile, of a node, based on coordinates. For example, the top left corner, at node 0,0, should return a "#". Additionally, you should be able to query if a coordinate is a `valid_node?`, basically, if it is not a "#" tile and it is within the grid, within the dimensions of the maze.
+
+One very important method to build is `neighbors`, which accepts coordinates for a node. That method must return an array of coordinates of all the neighboring nodes, that are valid tiles, north, south, east, west of the current node.
 
 ### The Queues and Stacks Context
 
+As you travel from the start point of the maze to all possible nodes until you reach the end of the maze, you'll be keeping track of the possible movements and the path you've traveled in arrays, `node_queue`, `traveled_path`, `visited_nodes`. 
+
+An `add_to_queues` method that accepts a node to be traveled, basically a neighbor of the target node, and the previous node, will be super helpful. Here's how it's going to work.
+
+Imagine playing through this maze, you start at 0,3. So you add 0,3 to our `node_queue`, calling `add_to_queues([0,3], [0,3])`. The first argument of [0,3] represents a node you just visited, the second argument is the node you came from, in this case, it's the start of the maze, the same node. The second move is to go to `[1,3]`, from `[0,3]`, so you call `add_to_queues([1,3], [0,3])`. At this point, your queues should look like:
+
+- `visited_nodes` - `[[0,3], [1,3]]`, as we've visted both nodes.
+- `traveled_path` - `[[[0,3],[0,3]], [[1,3], [0,3]]]`, as we moved to 1,3, from 0,3.
+- `node_queues` - `[[0,3], [1,3]]`, technically, this should be empty, but we never actually moved from node to node, we simply recreated the movements manually. Let's talk more about how the BFS moves through the maze.
+
 ### The #move Context
+
+With every given move of the BFS to solve the maze, a few things occur. First, we pop a node out of the node_queues array and that's our first move. We then need to find all the neighbors of the node and add them to the queues (along with remembering that when we visit those nodes, we came from the first node - this is describing the traveled_path again). We basically keep on doing this until we find the ending node (its value is '*' or its coordinates match the known end) or until there are no more nodes in the node_queue to travel.
+
+I would imagine that you'll see a loop of some sort in either the move or the solve method. I like to remove as much logic from loops as possible, so I think the move method can represent one movement, and be called from some other method's loop.
 
 # Instructions
 
 Fork and clone, push up your solution to `master`.
+
+
