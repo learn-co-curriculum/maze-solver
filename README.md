@@ -48,7 +48,7 @@ Our mazes are represented as strings.
     ### # ### #
     #     #   #
     # ##### ###
-    # #   #   *
+    # #   #   @
     # ### #####
     #         #
     ###########
