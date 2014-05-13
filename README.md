@@ -1,6 +1,6 @@
 ---
-tags: BFS, DFS
-languages: ruby
+  tags: BFS, DFS
+  languages: ruby
   resources: 2
 ---
 
