@@ -1,6 +1,7 @@
 ---
 tags: BFS, DFS
 languages: ruby
+  resources: 2
 ---
 
 # Objective
@@ -150,3 +151,7 @@ Given this traveled_path, you can see how you'd be able to work backwards until 
 # Instructions
 
 Fork and clone, push up your solution to `master`.
+
+## Resources
+* [Wikipedia](https://www.wikipedia.org/) - [Breadth-first-search](http://en.wikipedia.org/wiki/Breadth-first_search)
+* [Youtube](https://www.youtube.com/user/gogateiit/videos) - [Breadth-first-search algorithm](https://www.youtube.com/watch?v=QRq6p9s8NVg)
