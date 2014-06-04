@@ -1,5 +1,5 @@
 ---
-  tags: BFS, DFS
+  tags: BFS, DFS, cs, algorithms, computer science
   languages: ruby
   resources: 2
 ---
