@@ -4,6 +4,8 @@
   resources: 2
 ---
 
+# EDIT
+
 # Objective
 
 Implement a Breadth First Search algorithm to solve a maze programmatically. 
