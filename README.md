@@ -1,13 +1,16 @@
 ---
-tags: BFS, DFS
-languages: ruby
+  tags: BFS, DFS, cs, algorithms, computer science
+  languages: ruby
+  resources: 2
 ---
 
-# Objective
+# Maze Solver
+
+## Objective
 
 Implement a Breadth First Search algorithm to solve a maze programmatically. 
 
-# Introduction
+## Introduction
 
 The [Breadth First Search](http://en.wikipedia.org/wiki/Breadth-first_search) algorithm is a common way to solve node-based path executions. Given a graph of nodes, BFS will basically collect all the possible paths that can be traveled, and visit them until the destination node is reached. This [4 Minute Video on BFS](http://www.youtube.com/watch?v=QRq6p9s8NVg) explains it well.
 
@@ -37,7 +40,7 @@ There are three arrays we create, `node_queue`, `visited_nodes`, and `traveled_p
 
 Make sure to wrap your head around how BFS works in theory before trying to implement it. Watching that video and reading the Wikipedia article should help. There is also a [Flatiron presentation of BFS](https://docs.google.com/presentation/d/1gBm5YShcyAu_sfUFszCIJsKjz9dZDAmT7GOkjt-tj6s/edit?usp=sharing).
 
-## Notes on Implementing BFS to Solve a Maze
+### Notes on Implementing BFS to Solve a Maze
 
 Our mazes are represented as strings.
 
@@ -147,6 +150,7 @@ For example, at the end of the solve routine, you might expect to see a traveled
 
 Given this traveled_path, you can see how you'd be able to work backwards until you found what path led to the last node.
 
+<<<<<<< HEAD
 ## Level 1 Lab
 
 Within the test suite, a bunch of helper methods were added. Theoretically, these might not be needed to solve the maze, but being able to implement these instances methods will ensure you are properly manipulating and introspecting on the maze, the nodes, and their neighbors, adding data to the various stacks and queues, and able to move through nodes.
@@ -179,8 +183,10 @@ With every given move of the BFS to solve the maze, a few things occur. First, w
 
 I would imagine that you'll see a loop of some sort in either the move or the solve method. I like to remove as much logic from loops as possible, so I think the move method can represent one movement, and be called from some other method's loop.
 
-# Instructions
+## Instructions
 
 Fork and clone, push up your solution to `master`.
 
-
+### Resources
+* [Wikipedia](https://www.wikipedia.org/) - [Breadth-first-search](http://en.wikipedia.org/wiki/Breadth-first_search)
+* [Youtube](https://www.youtube.com/user/gogateiit/videos) - [Breadth-first-search algorithm](https://www.youtube.com/watch?v=QRq6p9s8NVg)
