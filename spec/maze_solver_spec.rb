@@ -1,6 +1,3 @@
-require_relative 'spec_helper'
-require_relative '../maze_solver'
-
 describe 'MazeSolver' do
   let(:small_maze){
     <<-11x11
