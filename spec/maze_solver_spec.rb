@@ -80,10 +80,10 @@ describe 'MazeSolver' do
     end
 
     it 'knows whether a node is a valid tile path' do
-      expect(maze_solver.valid_node?([12,12])).to be_false
-      expect(maze_solver.valid_node?([0,0])).to be_false
+      expect(maze_solver.valid_node?([12,12])).to be_falsey
+      expect(maze_solver.valid_node?([0,0])).to be_falsey
 
-      expect(maze_solver.valid_node?([1,3])).to be_true
+      expect(maze_solver.valid_node?([1,3])).to be_truthy
     end
 
     it 'finds non-blocked neighboring nodes for a given coordinate' do

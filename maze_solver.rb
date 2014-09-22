@@ -130,7 +130,6 @@ class MazeSolver
     end
 
     puts string.strip
-    binding.pry
   end
 
   private
