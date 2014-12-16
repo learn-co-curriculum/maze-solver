@@ -106,7 +106,7 @@ describe 'MazeSolver' do
   end
 
   describe '#move' do
-    it 'shifts the most recent node out of the node_queue' do
+    it 'shifts the first node out of the node_queue' do
       maze_solver.add_to_queues([0,3])
       maze_solver.move
 
