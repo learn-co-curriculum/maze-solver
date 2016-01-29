@@ -154,4 +154,4 @@ Fork and clone, push up your solution to `master`.
 * [Wikipedia](https://www.wikipedia.org/) - [Breadth-first-search](http://en.wikipedia.org/wiki/Breadth-first_search)
 * [Youtube](https://www.youtube.com/user/gogateiit/videos) - [Breadth-first-search algorithm](https://www.youtube.com/watch?v=QRq6p9s8NVg)
 
-<a href='https://learn.co/lessons/maze-solver' data-visibility='hidden'>View this lesson on Learn.co</a>
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/maze-solver' title='Maze Solver'>Maze Solver</a> on Learn.co and start learning to code for free.</p>
